@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
+    <!-- PWA Manifest & Theme Color -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#dc2626">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="O2 Rewards">
+<link rel="apple-touch-icon" href="icon-192.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>O2 Rewards - برنامج الولاء</title>
@@ -682,7 +689,7 @@
                     
                     <div class="flex items-center gap-2 cursor-pointer group">
                         <div class="w-10 h-10 rounded-full border-2 border-o2-red overflow-hidden group-hover:shadow-[0_0_10px_#e60000] transition-all">
-                            <img src="https://i.pravatar.cc/150?img=11" alt="User" class="w-full h-full object-cover">
+                            <img src="O2.png" alt="User" class="w-full h-full object-cover">
                         </div>
                         <span class="hidden md:block text-sm font-semibold">أهلاً، أحمد</span>
                         <i class="fa-solid fa-chevron-down text-xs text-gray-400 group-hover:text-o2-red transition-colors"></i>
@@ -857,32 +864,74 @@
                 </div>
 
                 <!-- Reward Card 3 (Locked) -->
-                <div class="reward-card glass-panel flex flex-col border-gray-800 opacity-70 cursor-not-allowed">
-                    <div class="relative h-48 overflow-hidden rounded-t-2xl p-4 bg-gradient-to-b from-transparent to-o2-darkGray flex justify-center items-center">
-                        <i class="fa-solid fa-drumstick-bite text-8xl text-orange-600 grayscale drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]"></i>
-                        
-                        <!-- Lock Overlay -->
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center flex-col z-10 backdrop-blur-[2px]">
-                            <i class="fa-solid fa-lock text-3xl text-gray-300 mb-2"></i>
-                            <span class="text-sm font-bold text-gray-300">تحتاج 750 نقطة إضافية</span>
-                        </div>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-xl font-bold mb-1 text-gray-300">صحن شاورما </h3>
-                            <p class="text-gray-500 text-sm mb-4 line-clamp-2">صحن شاورما مع فراشيح ومشروب </p>
-                        </div>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-star text-gray-500"></i>
-                                <span class="text-xl font-black text-gray-500">4,000</span>
-                            </div>
-                            <div class="w-full sm:w-auto bg-gray-800 text-gray-500 px-5 py-2 rounded-lg font-bold text-sm text-center">
-                                غير متاح
-                            </div>
-                        </div>
-                    </div>
+<div class="reward-card group glass-panel flex flex-col border-gray-800 relative overflow-hidden transition-all duration-500 hover:border-gray-600 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+    
+    <div class="relative h-48 overflow-hidden rounded-t-2xl p-4 bg-gradient-to-b from-o2-darkGray to-black flex justify-center items-center">
+        <!-- الصورة مع تأثير التكبير عند تمرير الماوس -->
+        <i class="fa-solid fa-drumstick-bite text-8xl text-orange-600 grayscale opacity-40 group-hover:scale-110 group-hover:opacity-60 transition-all duration-700 ease-out drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]"></i>
+
+        <!-- طبقة القفل والضبابية التي تخف عند التمرير -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-[4px] flex items-center justify-center flex-col z-10 transition-all duration-500 group-hover:backdrop-blur-[1px] group-hover:bg-black/40">
+            <div class="bg-black/60 p-4 rounded-full border border-gray-700 mb-3 shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:border-red-900/50 transition-colors duration-500">
+                <i class="fa-solid fa-lock text-3xl text-gray-400 group-hover:text-gray-300 transition-colors"></i>
+            </div>
+            <!-- رسالة تشويقية تظهر في المنتصف -->
+            <span class="text-sm font-bold text-gray-300 tracking-wide">الهدف القادم!</span>
+        </div>
+    </div>
+
+    <div class="p-5 flex-grow flex flex-col justify-between relative z-20">
+        <div>
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="text-xl font-bold text-gray-300 group-hover:text-white transition-colors">صحن شاورما</h3>
+                <!-- شارة مقفلة صغيرة -->
+                <span class="text-[10px] font-bold bg-gray-900 text-gray-400 px-2 py-1 rounded-md border border-gray-700 flex items-center gap-1">
+                    <i class="fa-solid fa-lock text-[9px]"></i> مقفلة
+                </span>
+            </div>
+            <p class="text-gray-500 text-sm mb-5 line-clamp-2">صحن شاورما مع فراشيح ومشروب</p>
+        </div>
+
+        <div class="mb-5 bg-black/30 p-3 rounded-xl border border-gray-800/50">
+            <div class="flex justify-between items-end mb-2">
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-gray-500 mb-0.5">النقاط الحالية</span>
+                    <span class="text-red-500 font-bold text-xs flex items-center gap-1">
+                        باقي 750 نقطة <i class="fa-solid fa-fire text-[10px] animate-pulse"></i>
+                    </span>
                 </div>
+                <div class="text-left flex flex-col items-end">
+                    <span class="text-[10px] text-gray-500 mb-0.5">الهدف</span>
+                    <span class="text-gray-300 text-xs font-bold font-mono tracking-wider">3250 / 4000</span>
+                </div>
+            </div>
+            
+            <!-- حاوية شريط التقدم -->
+            <div class="w-full h-2.5 bg-gray-900 rounded-full overflow-visible relative border border-black shadow-inner" dir="rtl">
+                <!-- الجزء الممتلئ من الشريط (يتم التحكم بعرضه عبر style) -->
+                <div class="h-full bg-gradient-to-l from-red-700 to-red-500 rounded-full relative shadow-[0_0_10px_rgba(229,9,20,0.2)] transition-all duration-1000 ease-out" style="width: 81%;">
+                    
+                    <!-- النقطة المضيئة في نهاية شريط التقدم (تمثل الحركة) -->
+                    <div class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-white rounded-full shadow-[0_0_8px_#e50914,0_0_15px_#e50914] animate-pulse z-10 border-2 border-red-500"></div>
+                    
+                    <!-- تأثير اللمعان الداخلي للشريط -->
+                    <div class="absolute inset-0 bg-gradient-to-l from-transparent via-white/20 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-800/60">
+            <div class="flex items-center gap-2 opacity-50 grayscale group-hover:grayscale-0 transition-all duration-300">
+                <i class="fa-solid fa-star text-o2-red"></i>
+                <span class="text-xl font-black text-gray-400">4,000</span>
+            </div>
+            <!-- زر يشجع على الاستمرار بدل "غير متاح" -->
+            <button disabled class="w-full sm:w-auto bg-gray-900 text-gray-400 border border-gray-700 px-5 py-2 rounded-lg font-bold text-sm text-center cursor-not-allowed transition-all duration-300 group-hover:bg-gray-800 group-hover:text-gray-300 group-hover:border-gray-600 flex items-center gap-2 justify-center">
+               لفك القفل اجمع المزيد
+            </button>
+        </div>
+    </div>
+</div>
 
             </div>
         </section>
@@ -961,29 +1010,43 @@
                     </div>
                 </div>
 
-                <!-- بيف برجر -->
-                <div class="meal-card bg-o2card border border-zinc-800 rounded-xl overflow-hidden glow-hover">
-                    <button class="accordion-btn w-full px-6 py-5 flex items-center justify-between focus:outline-none">
-                        <div class="flex items-center gap-4">
-                            <i class="fa-solid fa-burger text-o2red/80 text-xl"></i>
-                            <span class="text-xl font-bold text-right text-gray-100 meal-title">بيف برجر</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="text-base font-black px-2.5 py-0.5 bg-o2red/10 border border-o2red/20 text-o2red rounded-full">30 ₪</span>
-                            <i class="fa-solid fa-chevron-down chevron-icon text-zinc-500"></i>
-                        </div>
-                    </button>
-                    <div class="accordion-content bg-zinc-900/50 px-6 border-t border-zinc-800/50">
-                        <div class="mb-4 mt-2 overflow-hidden rounded-lg relative aspect-video bg-zinc-950 flex items-center justify-center">
-                            <div class="absolute inset-0 flex items-center justify-center bg-zinc-950/80 shimmer-loader text-zinc-500">
-                                <i class="fa-solid fa-circle-notch fa-spin text-o2red text-2xl"></i>
-                            </div>
-                            <img data-src="https://i.postimg.cc/vTVVv12p/image-(8).jpg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='60'></svg>" alt="بيف برجر" class="meal-img w-full h-full object-cover opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0'); this.previousElementSibling.remove();">
-                        </div>
-                        <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                        <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">خبزة برجر (فينو) - بيكانتي - خس - شرائح بصل - بندورة - قطعة لحم عجل مفروم مشوي - جبنة برجر.</p>
-                    </div>
-                </div>
+<!-- بيف برجر -->
+<div class="meal-card bg-o2card border border-zinc-800 rounded-xl overflow-hidden glow-hover">
+    <button class="accordion-btn w-full px-6 py-5 flex items-center justify-between focus:outline-none">
+        <div class="flex items-center gap-4">
+            <i class="fa-solid fa-burger text-o2red/80 text-xl"></i>
+            <span class="text-xl font-bold text-right text-gray-100 meal-title">بيف برجر</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="text-base font-black px-2.5 py-0.5 bg-o2red/10 border border-o2red/20 text-o2red rounded-full">30 ₪</span>
+            <i class="fa-solid fa-chevron-down chevron-icon text-zinc-500"></i>
+        </div>
+    </button>
+    
+    <div class="accordion-content bg-zinc-900/50 px-6 border-t border-zinc-800/50">
+        <!-- حاوية الصورة مع زر المعاينة المباشر المحدث -->
+        <div class="mb-4 mt-2 overflow-hidden rounded-lg relative aspect-video bg-zinc-950 flex items-center justify-center group">
+            
+            <!-- لودر التحميل الخاص بالصورة -->
+            <div class="absolute inset-0 flex items-center justify-center bg-zinc-950/80 shimmer-loader text-zinc-500 z-10">
+                <i class="fa-solid fa-circle-notch fa-spin text-o2red text-2xl"></i>
+            </div>
+            
+            <img data-src="https://i.postimg.cc/vTVVv12p/image-(8).jpg" src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='80' height='60'></svg>" alt="بيف برجر" class="meal-img w-full h-full object-cover opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0'); this.previousElementSibling.remove();">
+            
+            <!-- زر تشغيل فيديو البرجر المباشر o2.mp4 متوافق مع المودل الموحد -->
+            <button type="button" onclick="openMenuVideoModal('o2.mp4')" class="absolute bottom-3 left-3 bg-black/70 hover:bg-o2red text-white text-xs font-bold px-3 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200 z-20 backdrop-blur-sm focus:outline-none cursor-pointer">
+                <i class="fa-solid fa-play text-[10px]"></i>
+                <span>معاينة</span>
+            </button>
+            
+        </div>
+        
+        <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
+        <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">خبزة برجر (فينو) - بيكانتي - خس - شرائح بصل - بندورة - قطعة لحم عجل مفروم مشوي - جبنة برجر.</p>
+    </div>
+</div>
+
 
                 <!-- بيغ ماك -->
                 <div class="meal-card bg-o2card border border-zinc-800 rounded-xl overflow-hidden glow-hover">
@@ -2322,8 +2385,8 @@
 <section id="cakes" class="menu-section scroll-mt-24 relative text-right">
  
     <!-- العنوان + أزرار التحكم -->
-    <div class="flex items-center gap-4 mb-4">
-        <div class="w-12 h-12 rounded-full bg-o2red/10 flex items-center justify-center border border-o2red/30">
+        <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 px-[12.5vw] sm:px-8 py-2 scroll-smooth">
+            <div class="w-12 h-12 rounded-full bg-o2red/10 flex items-center justify-center border border-o2red/30">
             <i class="fa-solid fa-cake-candles text-o2red text-xl"></i>
         </div>
         <h2 class="text-3xl md:text-4xl font-bold text-white">قسم الكيك</h2>
@@ -2337,151 +2400,169 @@
     <!-- الكاروسيل -->
     <div data-cake-carousel>
         <div class="cake-track" data-cake-track>
-  
-            <!-- قطع كيك سبشل -->
-            <article class="cake-card meal-card bg-o2card border border-zinc-800 rounded-2xl overflow-hidden">
-                <div class="relative h-52 overflow-hidden bg-zinc-950">
-                    <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/h4687n3h/image-(23).jpg" alt="قطع كيك سبشل">
-                    <div class="absolute inset-0 bg-gradient-to-t from-o2card via-transparent to-transparent"></div>
-                    <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40">10 ₪</span>
-                </div>
-                <div class="p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-gem text-o2red"></i>
-                        <h3 class="text-xl font-bold text-gray-100 meal-title">قطع كيك سبشل</h3>
-                    </div>
-                    <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
-                    <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                    <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كيك مافينز محشو بالنوتيلا مغطى بالنوتيلا.</p>
-                </div>
-            </article>
- 
-            <!-- ترليتشا -->
-            <article class="cake-card meal-card bg-o2card border border-zinc-800 rounded-2xl overflow-hidden">
-                <div class="relative h-52 overflow-hidden bg-zinc-950">
-                    <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/02N39DHD/lqtt-shasht-2026-06-20-184402.png" alt="ترليتشا">
-                    <div class="absolute inset-0 bg-gradient-to-t from-o2card via-transparent to-transparent"></div>
-                    <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40">10 ₪</span>
-                </div>
-                <div class="p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-cheese text-o2red"></i>
-                        <h3 class="text-xl font-bold text-gray-100 meal-title">ترليتشا</h3>
-                    </div>
-                    <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
-                    <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                    <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كيك تركي مسقى بالحليب المكثف مغطى بنكهات / بلوبيري / شكولاته / كراميل / فراولة.</p>
-                </div>
-            </article>
-            <!-- سوبريم النوتيلا -->
-            <article class="cake-card meal-card bg-o2card border border-zinc-800 rounded-2xl overflow-hidden">
-                <div class="relative h-52 overflow-hidden bg-zinc-950">
-                    <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/CLKtwk6q/lqtt-shasht-2026-06-20-184328.png" alt="سوبريم النوتيلا">
-                    <div class="absolute inset-0 bg-gradient-to-t from-o2card via-transparent to-transparent"></div>
-                    <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40">18 ₪</span>
-                </div>
-                <div class="p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-cake-candles text-o2red"></i>
-                        <h3 class="text-xl font-bold text-gray-100 meal-title">سوبريم النوتيلا</h3>
-                    </div>
-                    <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
-                    <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                    <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كريمة نوتيلا مع طبقات كيك ناعم.</p>
-                </div>
-            </article>
+ <!-- قطع كيك سبشل -->
+    <article class="cake-card meal-card w-[75vw] sm:w-[300px] shrink-0 snap-center bg-o2card border border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full"> 
+        <div class="relative w-full aspect-[4/3] bg-zinc-950 overflow-hidden shrink-0"> 
+            <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/h4687n3h/image-(23).jpg" alt="قطع كيك سبشل"> 
+            <div class="absolute inset-0 bg-gradient-to-t from-o2card via-o2card/50 to-transparent"></div> 
+            <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40 z-10">10 ₪</span> 
+        </div> 
+        <div class="p-5 flex flex-col flex-grow justify-between"> 
+            <div>
+                <div class="flex items-center gap-3 mb-3"> 
+                    <i class="fa-solid fa-gem text-o2red"></i> 
+                    <h3 class="text-xl font-bold text-gray-100 meal-title">قطع كيك سبشل</h3> 
+                </div> 
+                <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div> 
+                <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4> 
+                <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كيك مافينز محشو بالنوتيلا مغطى بالنوتيلا.</p> 
+            </div>
+        </div> 
+    </article>
 
- 
-            <!-- قالب كيك كلاسيك -->
-            <article class="cake-card meal-card bg-o2card border border-zinc-800 rounded-2xl overflow-hidden">
-                <div class="relative h-52 overflow-hidden bg-zinc-950">
-                    <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/SRBW0Lz9/image-(28).jpg" alt="قالب كيك كلاسيك">
-                    <div class="absolute inset-0 bg-gradient-to-t from-o2card via-transparent to-transparent"></div>
-                    <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40">60/80 ₪</span>
+    <!-- ترليتشا -->
+    <article class="cake-card meal-card w-[75vw] sm:w-[300px] shrink-0 snap-center bg-o2card border border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full">
+        <div class="relative w-full aspect-[4/3] bg-zinc-950 overflow-hidden shrink-0">
+            <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/02N39DHD/lqtt-shasht-2026-06-20-184402.png" alt="ترليتشا">
+            <div class="absolute inset-0 bg-gradient-to-t from-o2card via-o2card/50 to-transparent"></div>
+            <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40 z-10">10 ₪</span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fa-solid fa-cheese text-o2red"></i>
+                    <h3 class="text-xl font-bold text-gray-100 meal-title">ترليتشا</h3>
                 </div>
-                <div class="p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-cake-candles text-o2red"></i>
-                        <h3 class="text-xl font-bold text-gray-100 meal-title">قالب كيك كلاسيك (كبير / صغير)</h3>
-                    </div>
-                    <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
-                    <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                    <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كيك مافينز محشو بالنوتيلا مغطى بنكهات / بلوبيري / شكولاته / كراميل / فراولة.</p>
+                <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
+                <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
+                <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كيك تركي مسقى بالحليب المكثف مغطى بنكهات / بلوبيري / شكولاته / كراميل / فراولة.</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- سوبريم النوتيلا -->
+    <article class="cake-card meal-card w-[75vw] sm:w-[300px] shrink-0 snap-center bg-o2card border border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full">
+        <div class="relative w-full aspect-[4/3] bg-zinc-950 overflow-hidden shrink-0">
+            <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/CLKtwk6q/lqtt-shasht-2026-06-20-184328.png" alt="سوبريم النوتيلا">
+            <div class="absolute inset-0 bg-gradient-to-t from-o2card via-o2card/50 to-transparent"></div>
+            <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40 z-10">18 ₪</span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fa-solid fa-cake-candles text-o2red"></i>
+                    <h3 class="text-xl font-bold text-gray-100 meal-title">سوبريم النوتيلا</h3>
                 </div>
-            </article>
- 
-            <!-- قالب كيك سبشل -->
-            <article class="cake-card meal-card bg-o2card border border-zinc-800 rounded-2xl overflow-hidden">
-                <div class="relative h-52 overflow-hidden bg-zinc-950">
-                    <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/wMChK5sJ/image-(25).jpg" alt="قالب كيك سبشل">
-                    <div class="absolute inset-0 bg-gradient-to-t from-o2card via-transparent to-transparent"></div>
-                    <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40">80/100 ₪</span>
+                <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
+                <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
+                <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كريمة نوتيلا مع طبقات كيك ناعم.</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- قالب كيك كلاسيك -->
+    <article class="cake-card meal-card w-[75vw] sm:w-[300px] shrink-0 snap-center bg-o2card border border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full">
+        <div class="relative w-full aspect-[4/3] bg-zinc-950 overflow-hidden shrink-0">
+            <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/SRBW0Lz9/image-(28).jpg" alt="قالب كيك كلاسيك">
+            <div class="absolute inset-0 bg-gradient-to-t from-o2card via-o2card/50 to-transparent"></div>
+            <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40 z-10">60/80 ₪</span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fa-solid fa-cake-candles text-o2red"></i>
+                    <h3 class="text-xl font-bold text-gray-100 meal-title">قالب كيك كلاسيك (كبير / صغير)</h3>
                 </div>
-                <div class="p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-cake-candles text-o2red"></i>
-                        <h3 class="text-xl font-bold text-gray-100 meal-title">قالب كيك سبشل (كبير / صغير)</h3>
-                    </div>
-                    <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
-                    <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                    <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كيك مافينز محشو بالنوتيلا مغطى بنكهات النوتيلا / لوتس / بستاشيو.</p>
+                <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
+                <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
+                <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كيك مافينز محشو بالنوتيلا مغطى بنكهات / بلوبيري / شكولاته / كراميل / فراولة.</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- قالب كيك سبشل -->
+    <article class="cake-card meal-card w-[75vw] sm:w-[300px] shrink-0 snap-center bg-o2card border border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full">
+        <div class="relative w-full aspect-[4/3] bg-zinc-950 overflow-hidden shrink-0">
+            <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/wMChK5sJ/image-(25).jpg" alt="قالب كيك سبشل">
+            <div class="absolute inset-0 bg-gradient-to-t from-o2card via-o2card/50 to-transparent"></div>
+            <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40 z-10">80/100 ₪</span>
+            <button type="button" onclick="openMenuVideoModal('cake.mp4')" class="absolute bottom-3 left-3 bg-black/70 hover:bg-o2red text-white text-xs font-bold px-3 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200 z-20 backdrop-blur-sm focus:outline-none cursor-pointer">
+                <i class="fa-solid fa-play text-[10px]"></i>
+                <span>معاينة</span>
+            </button>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fa-solid fa-cake-candles text-o2red"></i>
+                    <h3 class="text-xl font-bold text-gray-100 meal-title">قالب كيك سبشل (كبير / صغير)</h3>
                 </div>
-            </article>
- 
-            <!-- سوبريم اللوتس -->
-            <article class="cake-card meal-card bg-o2card border border-zinc-800 rounded-2xl overflow-hidden">
-                <div class="relative h-52 overflow-hidden bg-zinc-950">
-                    <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/4Nc660r8/image-(22).jpg" alt="سوبريم اللوتس">
-                    <div class="absolute inset-0 bg-gradient-to-t from-o2card via-transparent to-transparent"></div>
-                    <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40">18 ₪</span>
+                <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
+                <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
+                <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كيك مافينز محشو بالنوتيلا مغطى بنكهات النوتيلا / لوتس / بستاشيو.</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- سوبريم اللوتس -->
+    <article class="cake-card meal-card w-[75vw] sm:w-[300px] shrink-0 snap-center bg-o2card border border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full">
+        <div class="relative w-full aspect-[4/3] bg-zinc-950 overflow-hidden shrink-0">
+            <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/4Nc660r8/image-(22).jpg" alt="سوبريم اللوتس">
+            <div class="absolute inset-0 bg-gradient-to-t from-o2card via-o2card/50 to-transparent"></div>
+            <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40 z-10">18 ₪</span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fa-solid fa-cookie text-o2red"></i>
+                    <h3 class="text-xl font-bold text-gray-100 meal-title">سوبريم اللوتس</h3>
                 </div>
-                <div class="p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-cookie text-o2red"></i>
-                        <h3 class="text-xl font-bold text-gray-100 meal-title">سوبريم اللوتس</h3>
-                    </div>
-                    <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
-                    <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                    <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كريمة لوتس مع طبقات بسكويت لوتس ناعم.</p>
+                <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
+                <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
+                <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">كريمة لوتس مع طبقات بسكويت لوتس ناعم.</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- تشيز كيك -->
+    <article class="cake-card meal-card w-[75vw] sm:w-[300px] shrink-0 snap-center bg-o2card border border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full">
+        <div class="relative w-full aspect-[4/3] bg-zinc-950 overflow-hidden shrink-0">
+            <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/MHCyk0jK/image-(27).jpg" alt="تشيز كيك">
+            <div class="absolute inset-0 bg-gradient-to-t from-o2card via-o2card/50 to-transparent"></div>
+            <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40 z-10">10 ₪</span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fa-solid fa-cheese text-o2red"></i>
+                    <h3 class="text-xl font-bold text-gray-100 meal-title">تشيز كيك</h3>
                 </div>
-            </article>
- 
-            <!-- تشيز كيك -->
-            <article class="cake-card meal-card bg-o2card border border-zinc-800 rounded-2xl overflow-hidden">
-                <div class="relative h-52 overflow-hidden bg-zinc-950">
-                    <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/MHCyk0jK/image-(27).jpg" alt="تشيز كيك">
-                    <div class="absolute inset-0 bg-gradient-to-t from-o2card via-transparent to-transparent"></div>
-                    <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40">10 ₪</span>
+                <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
+                <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
+                <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">طبقة بسكويت ناعم + طبقة كريمة ومغطى بلوبيري.</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- موس كيك -->
+    <article class="cake-card meal-card w-[75vw] sm:w-[300px] shrink-0 snap-center bg-o2card border border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full">
+        <div class="relative w-full aspect-[4/3] bg-zinc-950 overflow-hidden shrink-0">
+            <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/cCpQq78J/image-(26).jpg" alt="موس كيك">
+            <div class="absolute inset-0 bg-gradient-to-t from-o2card via-o2card/50 to-transparent"></div>
+            <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40 z-10">10 ₪</span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <i class="fa-solid fa-cheese text-o2red"></i>
+                    <h3 class="text-xl font-bold text-gray-100 meal-title">موس كيك</h3>
                 </div>
-                <div class="p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-cheese text-o2red"></i>
-                        <h3 class="text-xl font-bold text-gray-100 meal-title">تشيز كيك</h3>
-                    </div>
-                    <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
-                    <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                    <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">طبقة بسكويت ناعم + طبقة كريمة ومغطى بلوبيري.</p>
-                </div>
-            </article>
- 
-            <!-- موس كيك -->
-            <article class="cake-card meal-card bg-o2card border border-zinc-800 rounded-2xl overflow-hidden">
-                <div class="relative h-52 overflow-hidden bg-zinc-950">
-                    <img class="cake-img w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/cCpQq78J/image-(26).jpg" alt="موس كيك">
-                    <div class="absolute inset-0 bg-gradient-to-t from-o2card via-transparent to-transparent"></div>
-                    <span class="absolute top-3 right-3 text-base font-black px-3.5 py-1 cake-price bg-o2red text-white rounded-full shadow-lg shadow-o2red/40">10 ₪</span>
-                </div>
-                <div class="p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-cheese text-o2red"></i>
-                        <h3 class="text-xl font-bold text-gray-100 meal-title">موس كيك</h3>
-                    </div>
-                    <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
-                    <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
-                    <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">طبقة كيك ناعم + طبقة كريمة ومغطى بنكهات لوتس / شوكلاته / نوتيلا / مانجا / فراولة.</p>
-                </div>
-            </article>
- 
+                <div class="h-px bg-gradient-to-l from-o2red/60 to-transparent mb-3"></div>
+                <h4 class="text-o2red font-bold text-sm mb-1">المكونات:</h4>
+                <p class="text-zinc-300 text-sm leading-relaxed meal-ingredients">طبقة كيك ناعم + طبقة كريمة ومغطى بنكهات لوتس / شوكلاته / نوتيلا / مانجا / فراولة.</p>
+            </div>
+        </div>
+    </article>
         </div>
  
         <!-- شريط التقدّم -->
@@ -2585,12 +2666,81 @@
     <footer class="border-t border-gray-800 mt-20 py-8 text-center relative z-10 bg-o2-black">
         <div class="flex justify-center items-center gap-2 mb-4">
              <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center p-1">
-                <img src="image_d59c45.png" alt="O2 Logo" class="h-full w-auto object-contain">
+                <img src="O2.png" alt="O2 Logo" class="h-full w-auto object-contain">
             </div>
             <span class="font-bold text-xl">O2</span>
         </div>
         <p class="text-gray-500 text-sm">© 2026 مطاعم O2. جميع الحقوق محفوظة.</p>
     </footer>
+<!-- كود المودل الموحد لجميع الفيديوهات -->
+<div id="globalMenuVideoModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="closeGlobalMenuModal(event)">
+    <div class="relative w-full max-w-[360px] bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl" onclick="event.stopPropagation()">
+        
+        <!-- زر الإغلاق الشفاف -->
+        <button type="button" onclick="forceCloseGlobalModal()" class="absolute top-4 right-4 text-white bg-black/40 hover:bg-black/70 p-2 rounded-full transition-colors z-30 focus:outline-none cursor-pointer backdrop-blur-sm">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+
+        <!-- حاوية حقن الفيديو المتجاوبة برمجياً (9:16) -->
+        <div id="globalVideoWrapper" class="w-full bg-black"></div>
+    </div>
+</div>
+
+<!-- كود الـ JavaScript المشترك للتحكم بالفيديوهات المتعددة -->
+<script>
+function openMenuVideoModal(videoSourceUrl) {
+    const modal = document.getElementById('globalMenuVideoModal');
+    const wrapper = document.getElementById('globalVideoWrapper');
+    
+    if (modal && wrapper) {
+        // فحص نوع الرابط إذا كان ملف محلي MP4 أو رابط خارجي متوافق لتحديد طريقة العرض
+        if (videoSourceUrl.endsWith('.mp4') || !videoSourceUrl.includes('iframe')) {
+            wrapper.innerHTML = `
+                <div class="w-full relative bg-black" style="padding-bottom: 177.778%; height: 0;">
+                    <video id="activeMenuVideo" class="absolute inset-0 w-full h-full object-cover" controls playsinline autoplay>
+                        <source src="${videoSourceUrl}" type="video/mp4">
+                        متصفحك لا يدعم تشغيل الفيديو.
+                    </video>
+                </div>
+            `;
+            
+            // التعامل مع قيود التشغيل التلقائي بالمتصفحات لملفات mp4 المباشرة
+            setTimeout(() => {
+                const videoEl = document.getElementById('activeMenuVideo');
+                if (videoEl) {
+                    videoEl.play().catch(function() {
+                        videoEl.muted = true;
+                        videoEl.play();
+                    });
+                }
+            }, 50);
+        } else {
+            // في حال رغبت بتضمين كود iframe لمنصات أخرى مستقبلاً
+            wrapper.innerHTML = videoSourceUrl;
+        }
+        
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // منع تمرير خلفية الموقع
+    }
+}
+
+function closeGlobalMenuModal(event) {
+    if (event.target === document.getElementById('globalMenuVideoModal')) {
+        forceCloseGlobalModal();
+    }
+}
+
+function forceCloseGlobalModal() {
+    const modal = document.getElementById('globalMenuVideoModal');
+    const wrapper = document.getElementById('globalVideoWrapper');
+    
+    if (modal && wrapper) {
+        wrapper.innerHTML = ""; // تفريغ الحاوية لحذف كود التشغيل فوراً وقطع الصوت تماماً
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // إعادة التمرير الطبيعي للموقع
+    }
+}
+</script>
 
     <!-- Scripts -->
     <!-- Include particles.js for background effect -->
@@ -2995,6 +3145,36 @@
         });
     </script>
     <script>
+
+        // تسجيل Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => console.log('Service Worker Registered Successfully!', reg))
+      .catch((err) => console.error('Service Worker Registration Failed:', err));
+  });
+}
+
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // قم إظهار زر التثبيت الخاص بك (مثلاً عنصر بأيدي #install-btn)
+  const installBtn = document.getElementById('install-btn');
+  if (installBtn) {
+    installBtn.style.display = 'block';
+    installBtn.addEventListener('click', () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        }
+        deferredPrompt = null;
+      });
+    });
+  }
+});
         document.addEventListener('DOMContentLoaded', function () {
             
             // 1. القائمة الجانبية للشاشات الصغيرة
@@ -3616,10 +3796,10 @@
         if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es[0].isIntersecting ? v.play().catch(function () {}) : v.pause(); }).observe(v);
     })();
     </script>
-<script>
+    <script>
     (function () {
         // ===== وسوم الأصناف — عدّل القوائم حسب منيوك (الاسم لازم يطابق عنوان الكرت) =====
-        var TOP = ['بيغ ماك','كاليزوني دجاج', 'شاورما نابلسي', 'تشيز كيك'];   // 🔥 الأكثر طلباً (أمثلة — غيّرها)
+        var TOP = ['بيغ ماك','كاليزوني دجاج', 'شاورما نابلسي'];   // 🔥 الأكثر طلباً (أمثلة — غيّرها)
         var NEW = ['كنافة دبي', 'كريب دبي'];                                // ✨ جديد (أمثلة — غيّرها)
         // 🌶️ حار: تلقائياً من الاسم أو المكونات (زينجر， هالبينو，    شطة...)
         var HOT = /باربيكيو|هالبينو|هلابينو|سبايسي/;
