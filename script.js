@@ -1,3 +1,27 @@
+// ===== View Transitions: تغييرات القوائم (عرض المزيد / البحث / المفضلة) بتتحرك بسلاسة، وإذا المتصفح ما بيدعمها بتشتغل عادي =====
+window.o2VT = function (fn) {
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.startViewTransition || reduce || window.o2VT.busy || window.__o2IntroPlaying) { fn(); return; }
+    window.o2VT.busy = true;
+    var done = function () { window.o2VT.busy = false; };
+    var t = document.startViewTransition(fn);
+    t.finished.then(done, done);
+};
+
+// ===== "ناقصك X نقطة" + شريط التقدم: بينحسبوا من رصيدك الحالي =====
+function o2UpdateLockMeters(points) {
+    var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); };
+    document.querySelectorAll('[data-lock-cost]').forEach(function (card) {
+        var cost = +card.dataset.lockCost, have = Math.max(0, points);
+        var need = Math.max(0, cost - have), pct = Math.min(100, have / cost * 100);
+        var q = function (s) { return card.querySelector(s); };
+        q('[data-lock-need]').textContent = fmt(need);
+        q('[data-lock-text]').textContent = fmt(Math.min(have, cost)) + ' / ' + fmt(cost);
+        var bar = q('[data-lock-bar]'); bar.setAttribute('aria-valuenow', Math.round(have)); bar.setAttribute('aria-valuemax', cost);
+        bar.querySelector('.meter-fill').style.setProperty('--p', pct + '%');
+    });
+}
+
 
 
 function openMenuVideoModal(videoSourceUrl) {
@@ -57,6 +81,7 @@ function forceCloseGlobalModal() {
 
         // Target Points (Hardcoded for demo)
         const targetPoints = 3250;
+        o2UpdateLockMeters(targetPoints);
         const maxTierPoints = 5000;
         
         // 1. Animate Number Counter
@@ -67,7 +92,7 @@ function forceCloseGlobalModal() {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                 // Ease out cubic
-                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const easeProgress = 1 - Math.pow(1 - progress, 5);
                 
                 const currentVal = Math.floor(easeProgress * (end - start) + start);
                 // Format with commas
@@ -107,7 +132,7 @@ function forceCloseGlobalModal() {
                 maxEl.textContent = fmt(max);
                 (function tick(now) {
                     const t = Math.min((now - t0) / dur, 1);
-                    const e = 1 - Math.pow(1 - t, 3);
+                    const e = 1 - Math.pow(1 - t, 5);
                     const c = c0 + (Math.max(0, current) - c0) * e;
                     pctEl.textContent = Math.round(p0 + (percentage - p0) * e);
                     curEl.textContent = fmt(c);
@@ -126,7 +151,7 @@ function forceCloseGlobalModal() {
                 const d = document.createElement('div'); d.className = 'cf'; d.style.cssText = `left:${x}px;top:${y}px;background:${c[i % 4]}`; document.body.appendChild(d);
                 const a = Math.random() * 6.28, v = 100 + Math.random() * 220;
                 d.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: `translate(${Math.cos(a) * v}px,${Math.sin(a) * v + 170}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }],
-                    { duration: 1300, easing: 'cubic-bezier(.2,.8,.4,1)' }).onfinish = () => d.remove();
+                    { duration: 1300, easing: 'cubic-bezier(.22,1,.36,1)' }).onfinish = () => d.remove();
             }
         }
         function redDrops(r) {
@@ -135,7 +160,7 @@ function forceCloseGlobalModal() {
                 d.style.cssText = `position:fixed;z-index:10001;pointer-events:none;width:${z}px;height:${z * 1.3}px;background:#e60000;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;left:${r.left + Math.random() * r.width}px;top:${r.top + r.height * .08}px`;
                 document.body.appendChild(d);
                 d.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${120 + Math.random() * 220}px)`, opacity: 0 }],
-                    { duration: 900 + Math.random() * 700, delay: Math.random() * 400, easing: 'cubic-bezier(.5,0,1,.6)', fill: 'backwards' }).onfinish = () => d.remove();
+                    { duration: 900 + Math.random() * 700, delay: Math.random() * 400, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' }).onfinish = () => d.remove();
             }
         }
         let bottleCelebrated = false, bottleCeleT = null;
@@ -290,7 +315,7 @@ function forceCloseGlobalModal() {
                 const d = document.createElement('div'); d.className = 'cf'; d.style.cssText = `left:${x}px;top:${y}px;background:${c[i % 4]}`; document.body.appendChild(d);
                 const a = Math.random() * 6.28, v = 90 + Math.random() * 190;
                 d.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: `translate(${Math.cos(a) * v}px,${Math.sin(a) * v + 150}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }],
-                    { duration: 1200, easing: 'cubic-bezier(.2,.8,.4,1)' }).onfinish = () => d.remove();
+                    { duration: 1200, easing: 'cubic-bezier(.22,1,.36,1)' }).onfinish = () => d.remove();
             }
         }
         whSpin.addEventListener('click', () => {
@@ -319,9 +344,9 @@ function forceCloseGlobalModal() {
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 20) {
-                nav.classList.add('bg-o2-black', 'bg-opacity-90', 'backdrop-blur-md', 'shadow-lg', 'shadow-red-900/10');
+                nav.classList.add('bg-surface-1', 'bg-opacity-90', 'backdrop-blur-md', 'shadow-lg', 'shadow-red-900/10');
             } else {
-                nav.classList.remove('bg-o2-black', 'bg-opacity-90', 'backdrop-blur-md', 'shadow-lg', 'shadow-red-900/10');
+                nav.classList.remove('bg-surface-1', 'bg-opacity-90', 'backdrop-blur-md', 'shadow-lg', 'shadow-red-900/10');
             }
         });
 
@@ -354,12 +379,12 @@ function forceCloseGlobalModal() {
 
         function confirmRedeem() {
             const btn = modalContent.querySelector('button.bg-o2-red');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التأكيد...';
+            btn.innerHTML = '<svg class="ic ic-spin" aria-hidden="true"><use href="#i-loader"/></svg> جاري التأكيد...';
             btn.classList.add('opacity-75', 'cursor-not-allowed');
             
             // Simulate API call
             setTimeout(() => {
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> تم الاستبدال بنجاح!';
+                btn.innerHTML = '<svg class="ic" aria-hidden="true"><use href="#i-check"/></svg> تم الاستبدال بنجاح!';
                 btn.classList.remove('bg-o2-red', 'hover:bg-o2-darkRed');
                 btn.classList.add('bg-green-600', 'hover:bg-green-700');
                 
@@ -369,6 +394,7 @@ function forceCloseGlobalModal() {
                 
                 if(!isNaN(currentPoints) && !isNaN(cost)){
                      animateValue(document.getElementById('points-counter'), currentPoints, currentPoints - cost, 1000);
+                     o2UpdateLockMeters(currentPoints - cost);
                      // Update progress bar backward
                      animateProgressBar(currentPoints - cost, maxTierPoints);
                 }
@@ -406,7 +432,7 @@ function forceCloseGlobalModal() {
             particlesJS('particles-js', {
                 "particles": {
                     "number": {
-                        "value": 80,
+                        "value": (window.innerWidth < 768 ? Math.round(80 * 0.4) : 80),
                         "density": { "enable": true, "value_area": 800 }
                     },
                     "color": { "value": "#e60000" }, // O2 Red
@@ -556,6 +582,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
                 if (showMoreBtn) {
                     showMoreBtn.addEventListener('click', function () {
                         isExpanded = !isExpanded;
+                        o2VT(() => {
                         const btnText = this.querySelector('.btn-text');
                         const btnIcon = this.querySelector('.btn-icon');
 
@@ -569,10 +596,9 @@ window.addEventListener('beforeinstallprompt', (e) => {
                             });
                             if (btnText) btnText.textContent = 'عرض المزيد من الأصناف';
                             if (btnIcon) btnIcon.style.transform = 'rotate(0deg)';
-                            
-                            // التمرير السلس إلى بداية القسم عند التقليص
-                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
+                        });
+                    if (!isExpanded) section.scrollIntoView({ behavior: 'smooth', block: 'start' });   // التمرير السلس عند التقليص
                     });
                 }
             });
@@ -584,7 +610,9 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
             if (searchInput) {
                 searchInput.addEventListener('input', function () {
-                    const query = this.value.trim().toLowerCase();
+                    const __q = this;
+                    o2VT(() => {
+                    const query = __q.value.trim().toLowerCase();
 
                     if (query.length > 0) {
                         clearSearchBtn.classList.remove('hidden');
@@ -643,6 +671,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
                             }
                         });
                     }
+                    });
                 });
 
                 // زر مسح حقل البحث
@@ -721,7 +750,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
             var sizes = nums.length === 2 ? [{ l: 'صغير', p: nums[0] }, { l: 'كبير', p: nums[1] }] : null;
             card._d = { id: sec.id + '|' + title, name: sizes ? title.replace(/\s*\(.*\)\s*$/, '') : title, price: nums.length === 1 ? nums[0] : null, sizes: sizes, si: 0 };
             var row = document.createElement('div'); row.className = 'meal-actions';
-            row.innerHTML = '<button class="fav-btn" aria-label="المفضلة"><i class="fa-solid fa-heart"></i></button>' +
+            row.innerHTML = '<button class="fav-btn" aria-label="المفضلة"><svg class="ic ic-fill" aria-hidden="true"><use href="#i-heart"/></svg></button>' +
                 (sizes ? '<select class="size-sel">' + sizes.map(function (s, i) { return '<option value="' + i + '">' + s.l + ' · ' + s.p + ' ₪</option>'; }).join('') + '</select>' : '') +
                 '<span class="pts-chip"></span><span class="add-wrap"></span>';
             card.appendChild(row);
@@ -732,9 +761,9 @@ window.addEventListener('beforeinstallprompt', (e) => {
         function find(k) { return cart.filter(function (i) { return i.key === k; })[0]; }
         function refreshCard(card) {
             var d = card._d, p = cur(card), it = find(keyOf(card));
-            $('.pts-chip', card).innerHTML = p ? '<i class="fa-solid fa-star"></i> تكسب ' + Math.round(p * POINTS_PER_SHEKEL) + ' نقطة' : 'السعر عند الطلب';
+            $('.pts-chip', card).innerHTML = p ? '<svg class="ic ic-fill" aria-hidden="true"><use href="#i-star"/></svg> تكسب ' + Math.round(p * POINTS_PER_SHEKEL) + ' نقطة' : 'السعر عند الطلب';
             $('.pts-chip', card).classList.toggle('muted', !p);
-            $('.add-wrap', card).innerHTML = it ? '<div class="stepper"><button data-a="plus">+</button><b>' + it.qty + '</b><button data-a="minus">−</button></div>' : '<button class="add-btn" data-a="add" aria-label="أضف للسلة"><i class="fa-solid fa-plus"></i></button>';
+            $('.add-wrap', card).innerHTML = it ? '<div class="stepper"><button data-a="plus">+</button><b>' + it.qty + '</b><button data-a="minus">−</button></div>' : '<button class="add-btn" data-a="add" aria-label="أضف للسلة"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button>';
             var on = favs.indexOf(d.id) > -1;
             $('.fav-btn', card).classList.toggle('on', on); card.classList.toggle('is-fav', on);
         }
@@ -815,7 +844,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
         favChip.onclick = function () {
             var on = !menu.classList.contains('fav-mode');
             if (on) { var s = $('#menu-search-input'); if (s && s.value) { s.value = ''; s.dispatchEvent(new Event('input')); } }
-            menu.classList.toggle('fav-mode', on); favChip.classList.toggle('active', on); updateFavUI();
+            o2VT(function () { menu.classList.toggle('fav-mode', on); favChip.classList.toggle('active', on); updateFavUI(); });
         };
         var si = $('#menu-search-input');
         if (si) si.addEventListener('input', function () { menu.classList.remove('fav-mode'); favChip.classList.remove('active'); });
@@ -836,7 +865,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     (function () {
         var $ = function (s, r) { return (r || document).querySelector(s); };
         var vib = function (n) { try { navigator.vibrate && navigator.vibrate(n || 15); } catch (e) {} };
-        function confetti(x, y) { var c = ['#e60000', '#facc15', '#fff', '#25D366']; for (var i = 0; i < 26; i++) { var d = document.createElement('div'); d.className = 'cf'; d.style.cssText = 'left:' + x + 'px;top:' + y + 'px;background:' + c[i % 4]; document.body.appendChild(d); var a = Math.random() * 6.28, v = 80 + Math.random() * 160; d.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: 'translate(' + Math.cos(a) * v + 'px,' + (Math.sin(a) * v + 140) + 'px) rotate(' + Math.random() * 720 + 'deg)', opacity: 0 }], { duration: 1100, easing: 'cubic-bezier(.2,.8,.4,1)' }).onfinish = (function (el) { return function () { el.remove(); }; })(d); } }
+        function confetti(x, y) { var c = ['#e60000', '#facc15', '#fff', '#25D366']; for (var i = 0; i < 26; i++) { var d = document.createElement('div'); d.className = 'cf'; d.style.cssText = 'left:' + x + 'px;top:' + y + 'px;background:' + c[i % 4]; document.body.appendChild(d); var a = Math.random() * 6.28, v = 80 + Math.random() * 160; d.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: 'translate(' + Math.cos(a) * v + 'px,' + (Math.sin(a) * v + 140) + 'px) rotate(' + Math.random() * 720 + 'deg)', opacity: 0 }], { duration: 1100, easing: 'cubic-bezier(.22,1,.36,1)' }).onfinish = (function (el) { return function () { el.remove(); }; })(d); } }
         document.addEventListener('click', function (e) { if (e.target.closest('.add-btn,.fav-btn,.stepper button')) { vib(); } });
 
         // ---- modal ----
@@ -1002,7 +1031,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
             GROUPS = [{ keys: ['beef', 'chicken'], max: 2, name: 'اللحمة والكرسبي' }];   // حد مشترك بين أكثر من مكوّن
         function openBurger() {
             var L = ['beef'], stack3d = null;
-            openM('<h3 class="text-xl font-black text-center">ابنِ برجرك 🍔</h3><div class="bb-stack" id="bb-stack"></div><div class="text-center font-black text-xl"><span id="bb-p"></span> <span class="text-sm text-yellow-400" id="bb-pts"></span></div><div class="bb-msg" id="bb-msg"></div><div class="bb-ing my-3" id="bb-ing">' + ING.map(function (g) { return '<button data-k="' + g[0] + '">' + g[2] + ' ' + g[1] + ' +' + g[3] + '₪ <em class="bb-c"></em></button>'; }).join('') + '</div><div class="flex gap-2"><button id="bb-undo" class="flex-1 py-3 rounded-xl bg-zinc-800 font-bold">تراجع ↩</button><button id="bb-add" class="flex-1 py-3 rounded-xl bg-o2-red font-black">أضف للسلة</button></div>');
+            openM('<h3 class="text-xl font-black text-center">ابنِ برجرك 🍔</h3><div class="bb-stack" id="bb-stack"></div><div class="text-center font-black text-xl"><span id="bb-p"></span> <span class="text-sm text-yellow-400" id="bb-pts"></span></div><div class="bb-msg" id="bb-msg"></div><div class="bb-ing my-3" id="bb-ing">' + ING.map(function (g) { return '<button data-k="' + g[0] + '">' + g[2] + ' ' + g[1] + ' +' + g[3] + '₪ <em class="bb-c"></em></button>'; }).join('') + '</div><div class="flex gap-2"><button id="bb-undo" class="flex-1 py-3 rounded-xl bg-surface-3 font-bold">تراجع ↩</button><button id="bb-add" class="flex-1 py-3 rounded-xl bg-o2-red font-black">أضف للسلة</button></div>');
             function price() { return BASE + L.reduce(function (s, k) { return s + ING.filter(function (g) { return g[0] === k; })[0][3]; }, 0); }
             function draw(fresh) {
                 var s = $('#bb-stack'); if (stack3d) stack3d.set(L, fresh === true); else s.innerHTML = '<div class="bb-top ' + (fresh === 'top' ? 'bb-new' : '') + '"></div>' + L.slice().reverse().map(function (k, i) { return '<div class="bb-' + k + (fresh && i === 0 ? ' bb-new' : '') + '"></div>'; }).join('') + '<div class="bb-bot"></div>';
@@ -1061,7 +1090,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
             function render() {
                 var a = $('#sw-area');
                 if (idx >= deck.length) {
-                    a.innerHTML = liked.length ? '<h4 class="font-black my-3 text-center">اخترنا لك ❤</h4>' + liked.map(function (c, i) { return '<div class="cart-row"><div class="nm">' + c._d.name + '<small>' + c._d.price + ' ₪ · ★ ' + O2cart.pts(c._d.price) + ' نقطة</small></div><button class="add-btn" data-i="' + i + '">أضف</button></div>'; }).join('') + '<button id="sw-again" class="w-full mt-3 py-3 rounded-xl bg-zinc-800 font-bold">جولة جديدة 🔄</button>' : '<p class="text-center py-10 text-zinc-400">ما اخترت شي! جرّب جولة ثانية</p><button id="sw-again" class="w-full py-3 rounded-xl bg-o2-red font-bold">جولة جديدة 🔄</button>';
+                    a.innerHTML = liked.length ? '<h4 class="font-black my-3 text-center">اخترنا لك ❤</h4>' + liked.map(function (c, i) { return '<div class="cart-row"><div class="nm">' + c._d.name + '<small>' + c._d.price + ' ₪ · ★ ' + O2cart.pts(c._d.price) + ' نقطة</small></div><button class="add-btn" data-i="' + i + '">أضف</button></div>'; }).join('') + '<button id="sw-again" class="w-full mt-3 py-3 rounded-xl bg-surface-3 font-bold">جولة جديدة 🔄</button>' : '<p class="text-center py-10 text-zinc-400">ما اخترت شي! جرّب جولة ثانية</p><button id="sw-again" class="w-full py-3 rounded-xl bg-o2-red font-bold">جولة جديدة 🔄</button>';
                     a.onclick = function (e) { var b = e.target.closest('.add-btn[data-i]'); if (b) { var c = liked[b.dataset.i], x = c.querySelector('.add-btn'); if (x) x.click(); b.textContent = '✓'; } if (e.target.id === 'sw-again') openSwipe(); };
                     return;
                 }
@@ -1083,11 +1112,30 @@ window.addEventListener('beforeinstallprompt', (e) => {
         }
         $('#open-swipe').onclick = openSwipe;
 
-        // ---- scroll reveal ----
-        if ('IntersectionObserver' in window) {
-            var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .08 });
-            document.querySelectorAll('#menu .meal-card,#menu .o2-tool').forEach(function (el, i) { el.classList.add('rv'); el.style.transitionDelay = (i % 3) * 70 + 'ms'; io.observe(el); });
-        }
+                // ---- scroll reveal: نظام واحد لكل الموقع (تتابع + easing موحّد) ----
+        (function () {
+            var sel = '[data-reveal],.reward-card,#how .grid > div,#menu .o2-tool,#menu .meal-card:not(.cake-card),.fb-box';
+            var els = [].slice.call(document.querySelectorAll(sel));
+            els.forEach(function (el) { if (!el.hasAttribute('data-reveal')) el.setAttribute('data-reveal', ''); });
+            if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+            var io = new IntersectionObserver(function (es) {
+                var n = 0;
+                es.filter(function (e) { return e.isIntersecting; })
+                  .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left; })
+                  .forEach(function (e) {
+                      var el = e.target; io.unobserve(el);
+                      var base = parseFloat(el.style.getPropertyValue('--i')) || 0;
+                      el.style.setProperty('--i', base + Math.min(n++, 5));
+                      el.classList.add('in');
+                      // بعد ما يخلص التتابع بنشيل الـ reveal عشان hover والترانزشن الأصلية للكرت ترجع
+                      setTimeout(function () { el.removeAttribute('data-reveal'); el.style.removeProperty('--i'); }, 700 + (base + 5) * 80 + 150);
+                  });
+            }, { threshold: .08, rootMargin: '0px 0px -4% 0px' });
+            var started = false;
+            function boot() { if (started) return; started = true; els.forEach(function (el) { io.observe(el); }); }
+            if (window.__o2IntroPlaying) { window.addEventListener('o2-intro-reveal', boot, { once: true }); setTimeout(boot, 9000); } else boot();
+        })();
+
     })();
 
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { var hv = document.getElementById('hero-video'); if (hv) hv.remove(); }
@@ -1123,7 +1171,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
             es.forEach(function (e) { if (e.isIntersecting) { thumbIO.unobserve(e.target); e.target.src = e.target.dataset.src; } });
         }, { rootMargin: '250px' }) : null;
         document.querySelectorAll('#menu .meal-card').forEach(function (card) {
-            var big = card.querySelector('.meal-img'), icon = card.querySelector('.accordion-btn > div > i');
+            var big = card.querySelector('.meal-img'), icon = card.querySelector('.accordion-btn > div > .ic');
             if (!big || !big.dataset.src || !icon) return;
             var th = document.createElement('span'); th.className = 'mthumb';
             var im = document.createElement('img'); im.alt = ''; im.decoding = 'async'; im.dataset.src = big.dataset.src;
