@@ -169,7 +169,7 @@ html{color-scheme:dark;-webkit-text-size-adjust:100%}
             opacity: 0;
             animation: o2IntroFade 0.7s var(--ease) 0.15s forwards;
         }
-        #o2-intro img { display: block; width: 100%; height: auto; will-change: transform; user-select: none; -webkit-user-drag: none; }
+        #o2-intro img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
         @keyframes o2IntroFade {
             from { opacity: 0; transform: scale(0.8); }
             to   { opacity: 1; transform: scale(1); }
@@ -527,4 +527,3 @@ a,button,[role=button],.o2-tool,.cat-chip{-webkit-tap-highlight-color:transparen
         .cake-card:hover { transform: none; }
         .cake-card.is-center { border-color: rgba(220,38,38,.65); box-shadow: 0 22px 44px -10px rgba(220,38,38,.45); }
     }
-
